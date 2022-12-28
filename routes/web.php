@@ -15,14 +15,16 @@ use App\Http\Controllers\BookingController;
 
 Route::get('/', [HomeController::class, 'first']);
 
-Route::get('/landing', [HomeController::class, 'index']);
-
-Route::get('/bookingpage', [BookingController::class, 'index']);
-
-Route::group(['middleware'=>'auth:sanctum'], function () {
+Route::group(['middleware'=>['auth', 'hakakses:admin']], function () {
     Route::resource('admin', AdminController::class);
 });
 
+Route::group(['middleware'=>['auth', 'hakakses:admin,user']], function () {
+
+    Route::get('/landing', [HomeController::class, 'index']);
+
+    Route::get('/bookingpage', [BookingController::class, 'index']);
+});
 
 Route::get('comunity/{id}', [AdminController::class,'comunity'])->name('package.comunity');
 

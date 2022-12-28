@@ -28,7 +28,7 @@
                                 <div class="flex flex-row items-center">
                                     <div>
                                         <!-- memberikan filter berupa comunity-->
-                                        <select id="paket" name="package_id"
+                                        <select id="admin" name="package_id"
                                             class="block w-full py-2 transition duration-300 ease-in-out bg-white border border-gray-300 rounded-l-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                             <option value="">All</option>
                                             <!-- menampilkan list comunity-->
@@ -40,7 +40,7 @@
                                         </select>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="text" name="s" value="{{ isset($_GET['s']) ? $_GET['s'] : '' }}"
+                                        <input type="text" name="s" value="{{ (isset($_GET['s'])) ? $_GET['s'] : '' }}"
                                             class="px-4 py-2 transition duration-300 ease-in-out border-gray-300 rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                         <button class="ml-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out text-primary hover:text-secondary icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -109,10 +109,10 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">                          
                                         <div class="text-sm text-gray-900">
-                                            {{$item->comunity?->comunity_name}}</a>
+                                            {{$item->comunity->comunity_name}}</a>
                                         </div>
                                         <div class="text-sm text-gray-500">
-                                            Kontak : {{$item->comunity?->contact}}
+                                            Kontak : {{$item->comunity->contact}}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">

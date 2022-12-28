@@ -20,7 +20,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $package = Packages::all();
         $title = "Daftar Kost";
         $package = new Packages;
         if (isset($_GET['s'])) {
@@ -31,9 +30,9 @@ class AdminController extends Controller
         if(isset($_GET['package_id'])&&$_GET['package_id']!=''){
             $package=$package->where('comunity_id', $_GET['package_id']);
         }
-
+        
         $package = $package->paginate(3);
-        $packages=Packages::all();
+        //dd($package);
         //$rates=Rates::all();
         $comunities=Comunity::all();
         //$discs=Discs::all();

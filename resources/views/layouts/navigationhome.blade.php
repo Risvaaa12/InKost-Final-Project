@@ -25,8 +25,10 @@
                     href="#">FAQ's</a></li>
                 <li class="md:ml-4"><a class="inline-block py-2 font-semibold md:text-white md:px-2 hover:text-yellow-400" 
                     href="#">Contact Us</a></li>
+                @if (auth()->user()->role=="admin")
                 <li class="md:ml-6"><a class="inline-block py-1 font-medium border rounded-md md:text-white md:px-2 hover:text-yellow-400" 
                     href="admin">Admin Page</a></li>
+                @endif
                 <li class="pl-4 mt-3 md:mt-0">
                 <a href="#">
                     <div class="hidden bg-yellow-400 rounded-lg sm:flex sm:items-center sm:ml-2">

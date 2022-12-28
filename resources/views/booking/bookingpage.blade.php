@@ -64,7 +64,7 @@
                         </div>
                         <div class="flex flex-col items-end w-full space-y-6 mt-7">
                         <div class="flex items-center justify-between w-full">
-                                <p class="text-lg leading-4 text-gray-600 dark:text-gray-300">Nama Kos :</p>
+                                <p class="text-lg leading-4 text-gray-600 dark:text-gray-300">Nama Kos : </p>
                                 <p class="text-lg font-semibold leading-4 text-gray-600 dark:text-gray-300" id="kosName"></p>
                             </div>
                             <div class="flex items-center justify-between w-full">

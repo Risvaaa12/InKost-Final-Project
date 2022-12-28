@@ -26,18 +26,51 @@
 </head>
 <body class="antialiased">
         <!-- start hero -->
-        @if (Route::has('login'))
-            <div class="fixed top-0 right-0 z-10 hidden px-6 py-4 sm:block">
-                @auth
-                    <a href="{{ url('/landing') }}" class="text-sm text-white underline">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-white underline">Log in</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-white underline">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
+        <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+            <header class="fixed absolute top-0 left-0 z-50 w-full px-4 sm:px-8 lg:px-16">
+                <div class="flex flex-wrap items-center justify-between py-6">
+                <div class="w-1/2 md:w-auto">
+                    <a href="index.html" class="text-2xl font-bold text-white">
+                    <img src="images/logo1.png" alt="">
+                    </a>
+                </div>
+
+                <label for="menu-toggle" class="block mr-6 pointer-cursor md:hidden"><svg class="text-white fill-current"
+                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <title>menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                    </svg></label>
+                <input class="hidden" type="checkbox" id="menu-toggle">
+
+                <div class="hidden w-full md:block md:w-auto" id="menu">
+                    <nav class="w-full px-6 py-4 mt-4 text-center bg-white rounded shadow-lg md:bg-transparent md:p-0 md:mt-0 md:shadow-none">
+                    <ul class="items-center md:flex">
+                        <li><a class="inline-block py-2 font-semibold md:text-white md:hidden lg:block hover:text-yellow-400" 
+                            href="#about">About Us</a></li>
+                        <li class="md:ml-4"><a class="inline-block py-2 font-semibold md:text-white md:px-2 hover:text-yellow-400" 
+                            href="#testi">Testimoni</a></li>
+                        <li class="md:ml-4"><a class="inline-block py-2 font-semibold md:text-white md:px-2 hover:text-yellow-400" 
+                            href="#">FAQ's</a></li>
+                        <li class="md:ml-4"><a class="inline-block py-2 font-semibold md:text-white md:px-2 hover:text-yellow-400" 
+                            href="#">Contact Us</a></li>
+                        @if (Route::has('login'))
+                                @auth
+                                <li class="md:ml-4"><a href="{{ url('/landing') }}" class="inline-block py-1 font-medium border rounded-md md:text-white md:px-2 hover:text-yellow-400">Dashboard</a></li>
+                                @else
+                                    <li class="md:ml-4"><a href="{{ route('login') }}" class="inline-block py-1 font-medium border rounded-md md:text-white md:px-2 hover:text-yellow-400">Log In</a></li>
+                                    @if (Route::has('register'))
+                                    <li class="md:ml-3"><a href="{{ route('register') }}" class="inline-block py-1 font-medium border rounded-md md:text-white md:px-2  hover:text-yellow-400">Sign In</a></li>
+                                    @endif
+                                @endauth
+                        @endif </li>
+                        </div>
+                    </ul>
+                    </nav>
+                </div>
+                </div>
+            </header>
+        </nav>
+        
         <div class="bg-gray-100">
         <section class="relative flex items-center min-h-screen px-4 overflow-hidden bg-gray-700 cover bg-blue-teal-gradient sm:px-8 lg:px-16 ">
             <div class="absolute top-0 left-0 right-0 z-0 h-full">
@@ -55,6 +88,145 @@
         </section>
         <!-- end hero -->
 
+
+        <!-- Fyp Section-->
+        <section >
+        <div class="container min-h-screen px-12 pt-16 bg-gray-100" id="book">
+            <div class="flex flex-col items-center justify-center">
+                <h2 class="text-2xl font-bold text-gray-800 md:text-4xl">For Your Page.</h2>
+                <p class=" text-base leading-6 text-center text-gray-700 2xl:w-2/5 ">Rekomendasi Dari Kami</p>
+            </div>
+            
+            <div  class="grid gap-4 my-6 md:grid-cols-3 lg:grid-cols-4" >
+                @foreach ($packages as $key=>$item) 
+                <div  class="overflow-hidden bg-white rounded shadow group" data-aos="fade-up">
+                    <div class="relative ">
+                        <img src="{{asset( $item->feature_img)}}" alt="product 1" class="w-full">
+                        <div class="absolute inset-0 flex items-center justify-center gap-2 transition bg-black opacity-0 bg-opacity-40 group-hover:opacity-100">
+                            <button @click="modalOpen = true"
+                                id="sch1"
+                                type="submit"
+                                class="flex items-center justify-center h-8 text-lg text-white transition rounded-full w-9 bg-primary hover:bg-yellow-400 fa-solid fa-magnifying-glass"
+                                title="view product">
+                            </button>
+                            <a href="/bookingpage"
+                                id="Kos1"
+                                type="submit"
+                                class="flex items-center justify-center h-8 text-lg text-white transition rounded-full w-9 bg-primary hover:bg-yellow-400 fa fa-shopping-cart"
+                                title="add to cart">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="px-4 pt-4 pb-3">
+                        <a id="Pos1" type="submit">
+                            <h4 class="text-xl font-medium text-gray-800 uppercase transition hover:text-primary">{{$item->package_name}}</h4>
+                        </a> 
+                        <div class="text-gray-500 mb-2text-sm">
+                            Alamat : {{$item->location}}
+                        </div>
+                        <p>{{$item->package_desc}}</p>
+                        <div class="flex flex-col items-baseline mb-1">
+                            <p class="text-xl font-semibold text-primary">Rp. {{$item->package_rate}}/bulan</p>
+                            <p class="text-sm text-gray-400">disc : Rp. {{$item->package_disc}}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex gap-1 text-sm text-yellow-400">
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="ml-3 text-xs text-gray-500">(150)</div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>    
+            <div class="py-6 font-sans text-center ">
+                    <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-yellow-400 hover:text- gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Prev
+                    </a>
+                    <!-- Next Button -->
+                    <a href="#" class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-yellow-400 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Next
+                    </a>
+                </div>
+        </section>
+        <!-- End FYP Section -->
+
+
+         <!-- start about -->
+    <section class="relative px-4 py-16 bg-gray-400 sm:px-8 lg:px-16 xl:px-40 lg:py-32" id="about">
+    <div class="flex flex-col text-white lg:flex-row lg:-mx-8">
+        <div class="w-full lg:w-1/2 lg:px-8"  data-aos="zoom-in">
+            <h2 class="mt-4 text-4xl font-bold leading-tight text-gray-900">About Us</h2>
+            <p class="mt-4 text-xl font-semibold">InKost on your area</p>
+            <p class="mt-2 leading-relaxed">InKost merupakan singkatan dari Info Kost yang merupakan web layanan informasi seputar properti seperti Kost dan Kontrakan siap huni. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, temporibus est corrupti quae hic commodi? Pariatur fugit voluptatibus obcaecati aliquam asperiores neque aut nulla veniam, adipisci explicabo odit a saepe?</p>
+        </div>
+
+        <div class="w-full mt-12 lg:w-1/2 lg:px-8 lg:mt-0"  data-aos="zoom-in">
+        <div class="md:flex">
+            <div>
+            <div class="w-16 h-16 bg-yellow-400 rounded-full hover:translate-y-3"></div>
+            </div>
+            <div class="mt-4 md:ml-8 md:mt-0">
+            <h4 class="text-xl font-bold leading-tight text-gray-700">Apa Yang Kami Berikan</h4>
+            <p class="mt-2 leading-relaxed">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis ab laborum repellat doloribus, perspiciatis dignissimos. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem alias et voluptatibus aliquam, ipsum harum.</p>
+            </div>
+        </div>
+
+        <div class="mt-8 md:flex"  data-aos="zoom-in">
+            <div>
+            <div class="w-16 h-16 bg-teal-400 rounded-full hover:translate-y-3"></div>
+            </div>
+            <div class="mt-4 md:ml-8 md:mt-0">
+            <h4 class="text-xl font-bold leading-tight text-gray-700">Apa Yang Kami Kerjakan</h4>
+            <p class="mt-2 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat beatae reprehenderit enim, cumque ad corrupti? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ad ut veritatis eius unde necessitatibus.</p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="mt-12"  data-aos="zoom-in">
+        <h1 class="mt-4 text-xl text-3xl font-bold leading-tight text-gray-800 ">Cara Booking</h1>
+    </div>
+
+    <div class="text-center text-gray-800 md:flex md:flex-wrap md:-mx-4 sm:mb-6"  data-aos="zoom-in">
+        <div class="pt-6 md:w-1/2 md:px-4 lg:w-1/4">
+        <div class="p-8 bg-yellow-400 border border-gray-300 rounded-lg hover:translate-y-4 hover:transition-all">
+            <h4 class="mt-4 text-xl font-bold">Log in</h4>
+            <p class="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, fugit? Lorem ipsum dolor sit amet.</p>
+            <a href="#" class="block mt-4 text-blue-500 hover:text-blue-100">Read More</a>
+        </div>
+        </div>
+
+        <div class="pt-6 md:w-1/2 md:px-4 lg:w-1/4">
+        <div class="p-8 bg-teal-400 border border-gray-300 rounded-lg hover:translate-y-4 hover:transition-all">
+            <h4 class="mt-4 text-xl font-bold">Pilih Kost</h4>
+            <p class="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, fugit?.</p>
+            <a href="#" class="block mt-4 text-blue-500 hover:text-blue-100">Read More</a>
+        </div>
+        </div>
+
+        <div class="pt-6 md:w-1/2 md:px-4 lg:w-1/4">
+        <div class="p-8 bg-yellow-400 border border-gray-300 rounded-lg hover:translate-y-4 hover:transition-all">
+            <h4 class="mt-4 text-xl font-bold">Tambah Ke Keranjang</h4>
+            <p class="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, fugit? Lorem ipsum dolor sit amet.</p>
+            <a href="#" class="block mt-4 text-blue-500 hover:text-blue-100">Read More</a>
+        </div>
+        </div>
+
+        <div class="pt-6 md:w-1/2 md:px-4 lg:w-1/4">
+        <div class="p-8 bg-teal-400 border border-gray-300 rounded-lg hover:translate-y-4 hover:transition-all">
+            <h4 class="mt-4 text-xl font-bold">Booking</h4>
+            <p class="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, fugit?.</p>
+            <a href="#" class="block mt-4 text-blue-500 hover:text-blue-100">Read More</a>
+        </div>
+        </div>       
+    </div>
+    </section>
+    <!-- end about -->
 
         
         <!-- start footer -->

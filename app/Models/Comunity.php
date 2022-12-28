@@ -14,6 +14,6 @@ class Comunity extends Model
         'comunity_name', 'contact', 'comunity_logo'
     ];
     public function packages(){
-        return $this->hasMany(Packages::class,'comuntiy_id','comuntiy_id');
+        return $this->hasMany(Packages::class,'comunity_id','comunity_id');
     }
 }

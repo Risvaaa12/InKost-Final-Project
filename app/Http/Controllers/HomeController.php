@@ -28,7 +28,11 @@ class HomeController extends Controller
     }
 
     function first(){
-        return view('frontpage.firstpage', ['title' => "first page"]);
+        $packages=Packages::all();
+        $comunities=Comunity::all();
+        $rates=Rates::all();
+        $discs=Discs::all();
+        return view('frontpage.firstpage', compact('packages','comunities','rates', 'discs'));
     }
     
 }
